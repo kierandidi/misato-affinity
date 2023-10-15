@@ -1,4 +1,25 @@
-## Environment
+<div align="center">
+
+# MISATO Affinity Predictions
+
+[![python](https://img.shields.io/badge/-Python_3.7_%7C_3.8_%7C_3.9_%7C_3.10-blue?logo=python&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![pytorch](https://img.shields.io/badge/PyTorch_1.10+-ee4c2c?logo=pytorch&logoColor=white)](https://pytorch.org/get-started/locally/)
+[![lightning](https://img.shields.io/badge/-Lightning_1.8+-792ee5?logo=pytorchlightning&logoColor=white)](https://pytorchlightning.ai/)
+
+</div>
+ 
+## :purple_heart: Community
+
+Want to get hands-on for drug discovery using AI?
+
+[Join our discord server!](https://discord.gg/tGaut92VYB)
+
+## :rocket:  About
+
+In this repository we provide the code for the binding affinity prediction task described in [our paper](https://www.biorxiv.org/content/10.1101/2023.05.24.542082v2). For the main dataset and instructions how to download it visit the [main repository site](https://github.com/t7morgen/misato-dataset)
+
+## :computer:  Environment setup
+
 ### 1. Conda environment
 Create a conda environment for the project via
 ```bash
@@ -74,7 +95,7 @@ WANDB_PROJECT="<your_wandb_project_name>"
 This project uses Hydra for configuration management. Adjust the parameters in the `configs`
 directory to your setup to run this project or adjust them via the command line (see below).
 
-## MISATO files and Preprocessing
+## :file_folder: MISATO files and Preprocessing
 
 The MISATO h5 files can be downloaded like this:
 
@@ -86,8 +107,6 @@ You can download a preprocessed h5 file containing the MD adaptability and refer
 https://syncandshare.lrz.de/getlink/fiVDroRT3k1cy1krpNp9Mj/adaptability_MD.hdf5
 
 The preprocessed graphs for the dataloader can also be downloaded.
-Not invariant graph:
-https://syncandshare.lrz.de/getlink/fiFu5hZovar7Zuz1zxiELF/preprocessed_graph.h5
 
 Invariant graph:
 https://syncandshare.lrz.de/getlink/fiGQ67kokEWG28rJ3fzCGt/preprocessed_graph_invariant.h5
@@ -99,15 +118,14 @@ python src/start_preprocessing.py
 The preprocessing scripts for the graphs can be found in src/data/processing/.
 
 
-
-## Experiment logging with wandb
+## :chart_with_upwards_trend: Experiment logging with wandb
 
 To log to wandb, you will first need to log in. To do so, simply install wandb via pip
 with `pip install wandb` and call `wandb login` from the commandline.
 
 If you are already logged in and need to relogin for some reason, use `wandb login --relogin`.
 
-## Training a model with pytorch lightning and logging on wandb
+## :mechanical_arm:	Training a model with pytorch lightning and logging on wandb
 
 To run a model simply use
 

@@ -1,0 +1,25 @@
+prefix: ./venv
+channels:
+  - pytorch
+  - bioconda
+  - conda-forge
+  - pyg
+  - defaults
+dependencies:
+  - python=3.9
+  - pytorch::pytorch
+  - pytorch::cpuonly
+  - pyg::pyg
+  - pip
+  - pytables # Annoying to install otherwise on M1
+  - conda-forge::pdbfixer
+  - pip:
+      - dm-tree
+      - h5py
+      - git+https://github.com/pyg-team/pyg-lib.git
+      - torch-scatter
+      - torch-sparse
+      - torch-geometric
+      - lion-pytorch
+      - -r prod.txt
+      - -r dev.txt

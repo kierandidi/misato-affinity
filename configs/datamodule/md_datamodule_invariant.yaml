@@ -1,0 +1,9 @@
+_target_: src.data.md_datamodule_invariant.MDDataModule
+graph_path: ${oc.env:INVARIANT_GRAPH_PATH}
+
+pair_path_train: ${oc.env:PAIR_PATH_TRAIN}
+pair_path_test: ${oc.env:PAIR_PATH_TEST}
+pair_path_val: ${oc.env:PAIR_PATH_VAL}
+affinity_path: ${oc.env:AFFINITY_PATH}
+batch_size: 50
+num_workers: 10

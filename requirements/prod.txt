@@ -1,0 +1,32 @@
+# Production requirements - the absolute minimum to be able to run the code
+-e ..
+
+# Software engineering tools
+hydra-core          # for configs
+hydra_colorlog      # for coloring hydra logs
+omegaconf           # for configs
+python-dotenv       # for .env files
+tqdm                # progress bars
+lmdb                # for storing data (lightning mapped database)
+msgpack             # for serialisation of data - akin to json but faster
+loguru              # for logging
+
+# Standard ML tools
+numpy               # linalg, arrays, etc
+pandas              # dataframe tools
+matplotlib          # plotting tools
+seaborn             # plotting tools
+scikit-learn        # standard ML algorithms
+lightning           # lightning model training tools
+tensorboard         # model tracking
+wandb               # experiment tracking
+torchinfo           # model summary
+torchtyping         # type checking for pytorch
+einops              # tensor manipulation   
+
+# Bio tools
+biopython           # general bio tools
+springcraft         # nma tools
+prody               # protein structure tools
+biotite             # protein structure tools
+

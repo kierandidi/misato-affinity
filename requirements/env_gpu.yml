@@ -1,0 +1,24 @@
+prefix: ./venv
+channels:
+  - nvidia
+  - pytorch
+  - bioconda
+  - pyg
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pytorch::pytorch=2.0
+  - pytorch::pytorch-cuda=11.8
+  - pyg::pyg=2.3
+  - conda-forge::pdbfixer
+  - pip
+  - pip:
+      - dm-tree
+      - h5py
+      - lion-pytorch
+      - torch-scatter -f https://data.pyg.org/whl/torch-2.0.0+cu118.html
+      - torch-sparse  -f https://data.pyg.org/whl/torch-2.0.0+cu118.html
+      - torch-cluster -f https://data.pyg.org/whl/torch-2.0.0+cu118.html
+      - -r prod.txt
+      - -r dev.txt

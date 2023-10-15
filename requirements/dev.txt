@@ -1,0 +1,15 @@
+# Specifies only dev-specific requirements
+
+# formatting
+isort==5.12.0   # auto sort imports consistently
+black==23.1.0   # autoformatter to ensure consistent formatting
+black[jupyter]  # make black work with jupyter notebooks
+autoflake       # for removing unused imports and variables
+
+# debugging
+icecream        # more readable print statements
+lovely-tensors  # for debugging tensors
+
+# interactive
+ipykernel
+jupyter
