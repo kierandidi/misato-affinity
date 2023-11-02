@@ -1,5 +1,5 @@
   _target_: 'src.models.GCN2.GraphConvNetwork'
-  in_dim: 51
+  in_dim: 50
   hidden_dim: 64
   out_dim: 1
   lr: 1e-4

@@ -39,10 +39,6 @@ def train(config: DictConfig):
 
     # Load data module
     datamodule = hydra.utils.instantiate(config.datamodule)
-    # datamodule = MDDataModule(constants.MD_PATH,
-    #                           constants.QM_PATH,
-    #                           constants.AFFINITY_PATH,
-    #                           constants.PAIR_PATH)
     datamodule.setup()
 
     # Validate the loaded data
@@ -82,10 +78,10 @@ def train(config: DictConfig):
     trainer.fit(model, datamodule)
 
     # Test the model at the best checkpoint
-    if config.test_model:
-        logger.info("Testing the model at the best checkpoint")
-        trainer.test(ckpt_path="best")
-        logger.info("Train loop completed. Exiting.")
+    #if config.test_model:
+    #    logger.info("Testing the model at the best checkpoint")
+    #    trainer.test(ckpt_path="best")
+    #    logger.info("Train loop completed. Exiting.")
 
 
 if __name__ == "__main__":
