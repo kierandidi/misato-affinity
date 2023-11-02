@@ -199,9 +199,9 @@ def write_h5(struct, md, qm, affinities, interaction_cutoff, oF):
 
 
 if __name__ == "__main__":
-    # Paths
-    md_path = "/p/project/hai_denovo/MISATO/adaptability_MD.hdf5"
-    qm_path = "/p/project/hai_denovo/MISATO/QM.hdf5"
+    # alter these paths
+    md_path = "data/adaptability_MD.hdf5"
+    qm_path = "data/QM.hdf5"
     affinity_path = "data/affinity_data.h5"
     output_path = "data/preprocessed_separate_combined_fullLigand_graphs_invariant.h5"
     
