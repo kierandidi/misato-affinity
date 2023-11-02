@@ -48,7 +48,7 @@ Set environment variables for you system in a `.env` file at the project directo
 
 ```
 # Path to the general data directory
-DATA_PATH=<path_to_your_general_data_directory>
+DATA_PATH=data/
 
 # Path to the directory where run outputs will be stored
 RUNS_PATH=<path_to_your_runs_directory>
@@ -60,25 +60,18 @@ PROJECT_PATH=<path_to_your_project_directory>
 MD_PATH=<path_to_your_md_data_file>
 
 # Path to the .hdf5 file containing (QM) data
-QM_PATH=<path_to_your_md_data_file>
-
-# Path to the .hdf5 file containing the h5 of the preprocessed graphs
-GRAPH_PATH=<path_to_your_md_data_file>
+QM_PATH=<path_to_your_qm_data_file>
 
 # Path to the .hdf5 file containing the h5 of the preprocessed invariant graphs
-INVARIANT_GRAPH_PATH=<path_to_your_md_data_file>
+INVARIANT_GRAPH_PATH=<path_to_your_graph_data_file>
 
 # Path to the .h5 file containing affinity data
-AFFINITY_PATH=<path_to_your_affinity_data_file>
+AFFINITY_PATH=data/affinity_data.h5
 
 # Path to the .pickle file containing all possible available protein-ligand pairs
-
 PAIR_PATH_TRAIN=data/train_pairs.pickle
 PAIR_PATH_TEST=data/test_pairs.pickle
 PAIR_PATH_VAL=data/val_pairs.pickle
-
-# path to the map containing the atomTypes
-ATOM_TYPE_MAP = <path_to_your_atom_type_pickle_file>
 
 # Your Weights & Biases API key
 WANB_API_KEY="<your_wandb_api_key>"
