@@ -115,10 +115,11 @@ def load_entity(entity_id, md, qm, affinities, interaction_cutoff):
     charges_prot = t.zeros(chain_index[-1])
 
     # Combine QM properties
+
     charges = t.cat((charges_prot, charges_lig)).unsqueeze(1)
 
     # MISATO features added
-    x = t.cat((x, adaptability, charges), 1)
+    #x = t.cat((x, adaptability, polarizabilities, charges), 1)
 
     # Calculate interaction distances
     edge_index_prot, edge_attr_prot = calculate_dist(coordinates[: chain_index[-1]], interaction_cutoff)
@@ -131,6 +132,8 @@ def load_entity(entity_id, md, qm, affinities, interaction_cutoff):
 
     return (
         x,
+        adaptabilities,
+        charges,
         edges_index,
         edges_attr,
         coordinates.float(),
@@ -157,6 +160,8 @@ def write_h5(struct, md, qm, affinities, interaction_cutoff, oF):
     # Load processed entity data
     (
         x,
+        adaptabilities,
+        charges,
         edges_index,
         edges_attr,
         coordinates,
@@ -174,6 +179,7 @@ def write_h5(struct, md, qm, affinities, interaction_cutoff, oF):
     # Add datasets to the subgroup
     datasets = {
         "atom_1hot": (x, "gzip"),
+        "charges": (charges, "gzip"),
         "edge_index_prot": (edge_index_prot, "gzip"),
         "edge_index_lig": (edge_index_lig, "gzip"),
         "edge_index_com": (edge_index_com, "gzip"),
@@ -182,6 +188,7 @@ def write_h5(struct, md, qm, affinities, interaction_cutoff, oF):
         "edge_attr_lig": (edge_attr_lig, "gzip"),
         "edge_attr_com": (edge_attr_com, "gzip"),
         "edge_attr_ligfull": (edge_attr_ligfull, "gzip"),
+        "adaptabilities": (adaptabilities, "gzip"),
         "coordinates": (coordinates, "gzip"),
         "affinity": (affinity, None),
         "ligand_begin_index": (ligand_begin_index, None),

@@ -73,13 +73,6 @@ class GraphConvNetwork(LightningModule):
         x_prot = global_mean_pool(x[indices == 0], batch=batch.batch[indices == 0])
         x_lig = global_mean_pool(x[indices == 1], batch=batch.batch[indices == 1])
 
-        # Concatenate the protein and ligand features and pass through two linear layers
-        # out = torch.cat([x_prot, x_lig], dim=1)
-        # out = self.fc1(out)
-        # out = self.relu(out)
-        # out = self.fc2(out)
-        # out = self.relu(out)
-        # out = self.fc3(out)
         return x_prot, x_lig
 
     def forward(self, batch1, batch2):
@@ -88,9 +81,7 @@ class GraphConvNetwork(LightningModule):
 
         batch: Batch - The batch containing all the necessary attributes.
         """
-        # print('inside forward')
-        # print(batch1, batch2)
-        # batch1, batch2 = batch[0]
+
         x_prot1, x_lig1 = self.forward_one_complex(batch1)
         x_prot2, x_lig2 = self.forward_one_complex(batch2)
 
@@ -110,8 +101,6 @@ class GraphConvNetwork(LightningModule):
 
     def training_step(self, batch, batch_idx):
         batch1, batch2 = batch
-        # print('training step batch 1', batch1)
-        # print('training step batch 2', batch2)
         x_1, edge_index_1, edge_weight_1, y_1 = (
             batch1.x,
             batch1.edge_index,
@@ -128,14 +117,10 @@ class GraphConvNetwork(LightningModule):
         y_hat = self.forward(batch1, batch2)
         y_hat = y_hat.view(-1)
 
-        # y1_log = torch.log(y_1*10**-9)
-        # y2_log = torch.log(y_2*10**-9)
-        # y=y1_log/y2_log
-
         y = torch.log(y_1 / y_2)
 
         loss = F.mse_loss(y_hat, y)
-        # loss = torch.nn.HuberLoss()(y_hat, y)
+
         self.log("y_hat", y_hat[0], batch_size=y.shape[0])
         self.log("y", y[0], batch_size=y.shape[0])
         self.log("train_loss", loss, batch_size=y.shape[0])
@@ -161,12 +146,10 @@ class GraphConvNetwork(LightningModule):
         y_hat = self.forward(batch1, batch2)
         y_hat = y_hat.view(-1)
 
-        # y1_log = torch.log(y_1*10**-9)
-        # y2_log = torch.log(y_2*10**-9)
-        # y=y1_log/y2_log
+
         y = torch.log(y_1 / y_2)
         loss = F.mse_loss(y_hat, y)
-        # loss = torch.nn.HuberLoss()(y_hat, y)
+
         self.log("val_loss", loss, batch_size=y.shape[0])
         return loss
 
@@ -188,11 +171,5 @@ class GraphConvNetwork(LightningModule):
         y_hat = self.forward(batch1, batch2)
         y_hat = y_hat.view(-1)
 
-        # y1_log = torch.log(y_1*10**-9)
-        # y2_log = torch.log(y_2*10**-9)
-        # y=y1_log/y2_log
         y = torch.log(y_1 / y_2)
-        # loss = F.mse_loss(y_hat, y)
-        # loss = torch.nn.HuberLoss()(y_hat, y)
-        # self.log('val_loss', loss, batch_size = y.shape[0])
         return (y, y_hat, (batch1.pdb_id, batch2.pdb_id))
