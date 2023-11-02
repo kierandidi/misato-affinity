@@ -104,10 +104,8 @@ The preprocessed graphs for the dataloader can also be downloaded.
 Invariant graph:
 https://syncandshare.lrz.de/getlink/fiGQ67kokEWG28rJ3fzCGt/preprocessed_graph_invariant.h5
 
-Alternatively, generate a h5 file containing the adaptability values from the MD.hdf5 file by running the preprocessing:
-```
-python src/start_preprocessing.py
-```
+Alternatively, generate a h5 file containing the adaptability values from the MD.hdf5 file by running the preprocessing. To this end follow the instructions from the MISATO repository https://github.com/t7morgen/misato-dataset . 
+
 The preprocessing scripts for the graphs can be found in src/data/processing/.
 
 
@@ -130,11 +128,6 @@ By default, `train.py` uses Weights&Biases logging via the credentials you provi
 For the invariant case, you could run a training run like:
 ```
 python src/train.py name=<YOUR_RUN_NAME> model=gcn datamodule=md_datamodule_invariant
-```
-
-For the equivariant case, you could run a training run like (use either `egnn` or `gvp`):
-```
-python src/train.py name=<YOUR_RUN_NAME> model=egnn datamodule=md_datamodule
 ```
 
 

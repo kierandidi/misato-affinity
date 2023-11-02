@@ -66,7 +66,7 @@ def load_entity(entity_id, md, qm, affinities, interaction_cutoff):
     Load entity data and compute associated properties.
 
     Parameters:
-    - entity_id (str): Identifier for the entity.
+    - entity_id (str): Identifier for the entity, usually a pdb-id.
     - md (h5py.File): Molecular dynamics data file.
     - qm (h5py.File): Quantum mechanics data file.
     - affinities (h5py.File): Affinities data file.
@@ -109,19 +109,16 @@ def load_entity(entity_id, md, qm, affinities, interaction_cutoff):
 
     # Extract QM properties for the ligand
     noHindices_lig = np.where(QMentity["atom_properties"]["atom_names"][()] != b"1")[0]
-    polarizabilities_lig = t.as_tensor(QMentity["atom_properties"]["atom_properties_values"][:, 15][noHindices_lig])
     charges_lig = t.as_tensor(QMentity["atom_properties"]["atom_properties_values"][:, 7][noHindices_lig])
 
     # Set QM properties for the protein
-    polarizabilities_prot = t.zeros(chain_index[-1])
     charges_prot = t.zeros(chain_index[-1])
 
     # Combine QM properties
-    polarizabilities = t.cat((polarizabilities_prot, polarizabilities_lig)).unsqueeze(1)
     charges = t.cat((charges_prot, charges_lig)).unsqueeze(1)
 
     # MISATO features added
-    x = t.cat((x, adaptability, polarizabilities, charges), 1)
+    x = t.cat((x, adaptability, charges), 1)
 
     # Calculate interaction distances
     edge_index_prot, edge_attr_prot = calculate_dist(coordinates[: chain_index[-1]], interaction_cutoff)
@@ -160,9 +157,6 @@ def write_h5(struct, md, qm, affinities, interaction_cutoff, oF):
     # Load processed entity data
     (
         x,
-        polarizabilities,
-        charges,
-        adaptabilities,
         edges_index,
         edges_attr,
         coordinates,
@@ -180,8 +174,6 @@ def write_h5(struct, md, qm, affinities, interaction_cutoff, oF):
     # Add datasets to the subgroup
     datasets = {
         "atom_1hot": (x, "gzip"),
-        "polarizabilities": (polarizabilities, "gzip"),
-        "charges": (charges, "gzip"),
         "edge_index_prot": (edge_index_prot, "gzip"),
         "edge_index_lig": (edge_index_lig, "gzip"),
         "edge_index_com": (edge_index_com, "gzip"),
@@ -190,7 +182,6 @@ def write_h5(struct, md, qm, affinities, interaction_cutoff, oF):
         "edge_attr_lig": (edge_attr_lig, "gzip"),
         "edge_attr_com": (edge_attr_com, "gzip"),
         "edge_attr_ligfull": (edge_attr_ligfull, "gzip"),
-        "adaptabilities": (adaptabilities, "gzip"),
         "coordinates": (coordinates, "gzip"),
         "affinity": (affinity, None),
         "ligand_begin_index": (ligand_begin_index, None),
