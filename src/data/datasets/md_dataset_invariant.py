@@ -6,6 +6,11 @@ import pickle
 
 logger = get_logger(__name__)
 
+def normalized(feature):
+    feature = feature - feature.mean()
+    feature = feature / feature.std()
+    return feature
+
 
 def load_entity(entity_id, graph, affinity_h5, misato_features=True):
     """
@@ -35,8 +40,7 @@ def load_entity(entity_id, graph, affinity_h5, misato_features=True):
     # Extracting features from the graph data
     coordinates = t.as_tensor(graph_entity["coordinates"][:]).to(t.float32)
     adaptabilities = t.as_tensor(graph_entity["adaptabilities"][:])
-    polarizabilities = t.as_tensor(graph_entity["polarizabilities"][:])
-    charges = t.as_tensor(graph_entity["charges"][:])
+    charges = normalized(t.as_tensor(graph_entity["charges"][:]))
     edge_index = t.as_tensor(graph_entity["edge_index"][:])
     edge_attr = t.as_tensor(graph_entity["edge_attr"][:]).unsqueeze(1)
     x = t.as_tensor(graph_entity["atom_1hot"][:])

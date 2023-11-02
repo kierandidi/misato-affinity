@@ -182,11 +182,11 @@ def write_h5(struct, md, qm, affinities, interaction_cutoff, oF):
         "charges": (charges, "gzip"),
         "edge_index_prot": (edge_index_prot, "gzip"),
         "edge_index_lig": (edge_index_lig, "gzip"),
-        "edge_index_com": (edge_index_com, "gzip"),
+        "edge_index": (edge_index_com, "gzip"),
         "edge_index_ligfull": (edge_index_ligfull, "gzip"),
         "edge_attr_prot": (edge_attr_prot, "gzip"),
         "edge_attr_lig": (edge_attr_lig, "gzip"),
-        "edge_attr_com": (edge_attr_com, "gzip"),
+        "edge_attr": (edge_attr_com, "gzip"),
         "edge_attr_ligfull": (edge_attr_ligfull, "gzip"),
         "adaptabilities": (adaptabilities, "gzip"),
         "coordinates": (coordinates, "gzip"),
@@ -199,9 +199,9 @@ def write_h5(struct, md, qm, affinities, interaction_cutoff, oF):
 
 
 if __name__ == "__main__":
-    # Paths
-    md_path = "/p/project/hai_denovo/MISATO/adaptability_MD.hdf5"
-    qm_path = "/p/project/hai_denovo/MISATO/QM.hdf5"
+    # alter these paths
+    md_path = "data/adaptability_MD.hdf5"
+    qm_path = "data/QM.hdf5"
     affinity_path = "data/affinity_data.h5"
     output_path = "data/preprocessed_separate_combined_fullLigand_graphs_invariant.h5"
     
