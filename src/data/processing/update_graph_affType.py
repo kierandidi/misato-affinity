@@ -1,63 +1,48 @@
 import h5py
-import pandas as pd
+import pickle
 import os
-from collections import defaultdict
+from src.utils.logutils import get_logger
 
 
-def check_affinity_type(df, index):
-    """
-    Check the affinity type for a given row in the dataframe.
+logger = get_logger(__name__)
 
-    Parameters:
-    - df (pandas.DataFrame): Dataframe containing affinity data.
-    - index (int): Row index to check.
+def convert_affinityType(affType):
+    if affType == 'Kd (nM)':
+        converted_affType = 0
+    if affType == 'Ki (nM)':
+        converted_affType = 1
+    if affType == 'IC50 (nM)':
+        converted_affType = 2
+    return converted_affType
 
-    Returns:
-    - tuple: Affinity type and its corresponding value.
-    """
-    series = df.iloc[index, 1:4] != 0.0
-    affType = series.index[series].tolist()
+def load_entity(entity_id, md):
+    """Load entity data and calculate properties."""
+    try:
+        MDentity = md[entity_id]
+    except KeyError:
+        logger.error(f'Entity {entity_id} not found in MD file.')
+        raise
 
-    return affType[0], float(df.iloc[index, 1:4][affType][0])
+    affinityType_str = MDentity['affinityType'][()].decode()
+    converted_affType = convert_affinityType(affinityType_str)
 
-
-def write_h5_info(outName, df):
-    """
-    Write affinity information to an HDF5 file.
-
-    Parameters:
-    - outName (str): Name of the output file.
-    - df (pandas.DataFrame): Dataframe containing affinity data.
-
-    Returns:
-    - None
-    """
-    if os.path.isfile(outName):
-        os.remove(outName)
-
-    with h5py.File(outName, "w") as oF:
-        for i in range(df.shape[0]):
-            subgroup = oF.create_group(df["PDBid"][i])
-            affType, affValue = check_affinity_type(df, i)
-            
-            datasets = {
-                "affinity": affValue,
-                "affinityType": affType,
-                "ligandID": df["ligand"][i],
-                "proteinName": df["Protein"][i],
-                "type": df["type"][i],
-                "Uniprot": df["Uniprot"][i]
-            }
-
-            for key, data in datasets.items():
-                subgroup.create_dataset(key, data=data)
+    return converted_affType
 
 
-if __name__ == "__main__":
-    d = defaultdict(list)
-    df = pd.read_csv("../../../data/affinity_data.csv", on_bad_lines="skip", delimiter=";")
+def write_h5(struct, md, oF):
+    affType = load_entity(struct, md)
+    oF[struct].create_dataset('affinity_type', data= affType)
 
-    for i in range(df.shape[0]):
-        d[df["Uniprot"][i]].append(df["PDBid"][i])
 
-    print(len(d.keys()))
+
+if __name__=="__main__":
+    aff_path="data/affinity_data.h5"
+    affinity_path="data/affinity_data.h5"
+    output_path = 'data/preprocessed_graph_invariant_affTypes.h5'
+    aff = h5py.File(aff_path)
+
+    structs = pickle.load(open('data/affinity_structs.pickle', 'rb'))
+    output = h5py.File(output_path, 'a')
+
+    for struct in structs:
+        write_h5(struct, aff, output)
