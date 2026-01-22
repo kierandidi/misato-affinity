@@ -97,12 +97,12 @@ wget -O data/MD.hdf5 https://zenodo.org/record/7711953/files/MD.hdf5
 wget -O data/QM.hdf5 https://zenodo.org/record/7711953/files/QM.hdf5
 ```
 You can download a preprocessed h5 file containing the MD adaptability and reference coordinates from here:
-https://github.com/kierandidi/misato-affinity.git
+https://drive.google.com/drive/folders/1pMff605gAUVV174P-3btYaDlnujEFjvq
 
 The preprocessed graphs for the dataloader can also be downloaded.
 
 Invariant graph:
-https://github.com/kierandidi/misato-affinity.git
+https://drive.google.com/drive/folders/1pMff605gAUVV174P-3btYaDlnujEFjvq
 
 Alternatively, generate a h5 file containing the adaptability values from the MD.hdf5 file by running the preprocessing. To this end follow the instructions from the MISATO repository https://github.com/t7morgen/misato-dataset . 
 
